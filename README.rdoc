@@ -1,22 +1,63 @@
 = Sunspot Cell
 
 This plugin adds Cell support (for indexing rich documents) to Sunspot (developed against Sunspot 1.2.1).
+Support Paperclip and S3 Storage
 
 The code is based on the patch included here:
 http://outoftime.lighthouseapp.com/projects/20339/tickets/98-solr-cell
 
 == Requirements
 
-* Solr Cell libraries (+dist/apache-solr-cell-1.4.X.jar+ and +contrib/extraction/lib/*.jar+ from the standard Solr distribution) placed in the +/solr/lib+ directory as created by the Sunspot gem, in development environment. Your production setup might vary.
+* Sunspot gem installed
 
-* Adjustments to the Solr +schema.xml+:
+* Solr Cell libraries
 
-	<fieldType name="ignored" stored="false" indexed="false" multiValued="true" class="solr.StrField" />
-	
-and
-	
-	<dynamicField name="*_attachment" stored="true" type="text" multiValued="true" indexed="true"/>
-	<dynamicField name="ignored_*" type="ignored"/>
+* Adjustments to the Solr +schema.xml+
+
+== Install
+
+=== Get dependencies (Solr Cell libraries & schema.xml)
+
+ You can get these from http://www.chebyte.com/solr-chebyte.tgz
+
+ then in the root rails app descompresses this
+
+  #root-app> tar -xvzf solr-chebyte.tgz
+
+ note: if you want to put it manually, you have to put jars in solr/lib and schema.xml in solr/conf
+
+=== Install Puglin
+
+  Add sunspot gem to Gemfile:
+
+    gem 'sunspot_rails', '~> 1.2.1'
+
+  Install sunspot cell plugin
+
+    #root-app> rails plugins install git://github.com/chebyte/sunspot_cell.git
+
+== Usage
+
+class Doc
+  searchable do
+     text :title
+     attachment :file
+   end
+end
+
+== Paperclip & S3 Storage
+
+class Doc
+  searchable do
+     text :title
+     attachment :attached_file
+   end
+
+private
+  def attached_file
+    URI.parse(file.expiring_url(60))
+  end
+end
 
 == Note
 
