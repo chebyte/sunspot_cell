@@ -28,7 +28,7 @@ then in the root rails app descompresses this
 
 note: if you want to put it manually, you have to put jars in solr/lib and schema.xml in solr/conf
 
-=== Install Puglin
+=== Install Plugin
 
 Add sunspot gem to Gemfile:
  
