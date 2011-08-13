@@ -61,9 +61,6 @@ Install sunspot cell plugin
     end
   end
 
-== Note
-
-This version assumes the attachment attribute has method +.data+, that returns contents of the attachment.
 
 == Todo
 
