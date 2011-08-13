@@ -18,46 +18,48 @@ http://outoftime.lighthouseapp.com/projects/20339/tickets/98-solr-cell
 
 === Get dependencies (Solr Cell libraries & schema.xml)
 
- You can get these from http://www.chebyte.com/solr-chebyte.tgz
+You can get these from: 
 
- then in the root rails app descompresses this
+ http://www.chebyte.com/solr-chebyte.tgz
 
-  #root-app> tar -xvzf solr-chebyte.tgz
+then in the root rails app descompresses this
 
- note: if you want to put it manually, you have to put jars in solr/lib and schema.xml in solr/conf
+ #root-app> tar -xvzf solr-chebyte.tgz
+
+note: if you want to put it manually, you have to put jars in solr/lib and schema.xml in solr/conf
 
 === Install Puglin
 
-  Add sunspot gem to Gemfile:
+Add sunspot gem to Gemfile:
+ 
+ gem 'sunspot_rails', '~> 1.2.1'
 
-    gem 'sunspot_rails', '~> 1.2.1'
-
-  Install sunspot cell plugin
-
-    #root-app> rails plugins install git://github.com/chebyte/sunspot_cell.git
+Install sunspot cell plugin
+ 
+ #root-app> rails plugins install git://github.com/chebyte/sunspot_cell.git
 
 == Usage
 
-class Doc
-  searchable do
-     text :title
-     attachment :file
-   end
-end
+  class Doc
+    searchable do
+       text :title
+       attachment :file
+     end
+  end
 
 == Paperclip & S3 Storage
 
-class Doc
-  searchable do
-     text :title
-     attachment :attached_file
-   end
+  class Doc
+    searchable do
+       text :title
+       attachment :attached_file
+     end
 
-private
-  def attached_file
-    URI.parse(file.expiring_url(60))
+  private
+    def attached_file
+      URI.parse(file.expiring_url(60))
+    end
   end
-end
 
 == Note
 
