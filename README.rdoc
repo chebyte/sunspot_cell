@@ -49,6 +49,8 @@ Install sunspot cell plugin
 
 == Paperclip & S3 Storage
 
+  require 'open-uri'
+
   class Doc
     searchable do
        text :title
